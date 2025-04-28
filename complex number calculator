@@ -1,0 +1,93 @@
+#include<iostream>
+using namespace std;
+class Complex {
+public:
+    float real, imag;
+    Complex(float r = 0, float i = 0) {
+        real = r;
+        imag = i;
+    }
+    Complex operator+(const Complex& other) {
+        Complex result;
+        result.real = real + other.real;
+        result.imag = imag + other.imag;
+        return result;
+    }
+    Complex operator-(const Complex& other) {
+        Complex result;
+        result.real = real - other.real;
+        result.imag = imag - other.imag;
+        return result;
+    }
+    Complex operator*(const Complex& other) {
+        Complex result;
+        result.real = real * other.real - imag * other.imag;
+        result.imag = real * other.imag + imag * other.real;
+        return result;
+    }
+    Complex operator/(const Complex& other) {
+        Complex result;
+        float denominator = other.real * other.real + other.imag * other.imag;
+        if (denominator == 0) {
+            cout << "Error: Division by zero!" << endl;
+            return result;
+        }
+        result.real = (real * other.real + imag * other.imag) / denominator;
+        result.imag = (imag * other.real - real * other.imag) / denominator;
+        return result;
+    }
+    void display() {
+        if (imag >= 0)
+            cout << real << " + " << imag << "i" << endl;
+        else
+            cout << real << " - " << -imag << "i" << endl;
+    }
+};
+int main() {
+    float r1, i1, r2, i2;
+    int s_no;
+    cout << "Enter real part of first complex number: ";
+    cin >> r1;
+    cout << "Enter imaginary part of first complex number: ";
+    cin >> i1;
+    cout << "Enter real part of second complex number: ";
+    cin >> r2;
+    cout << "Enter imaginary part of second complex number: ";
+    cin >> i2;
+    Complex c1(r1, i1), c2(r2, i2);
+    cout << "\nSelect operation:\n1. Add\n2. Subtract\n3. Multiply\n4. Divide\n5. Exit\n";
+    cin >> s_no;
+
+    switch (s_no) {
+        case 1: {
+            Complex result = c1 + c2;
+            cout << "Addition result: ";
+            result.display();
+            break;
+        }
+        case 2: {
+            Complex result = c1 - c2;
+            cout << "Subtraction result: ";
+            result.display();
+            break;
+        }
+        case 3: {
+            Complex result = c1 * c2;
+            cout << "Multiplication result: ";
+            result.display();
+            break;
+        }
+        case 4: {
+            Complex result = c1 / c2;
+            cout << "Division result: ";
+            result.display();
+            break;
+        }
+        case 5:
+            cout << "Exiting the program.\n";
+            break;
+        default:
+            cout << "Invalid choice.\n";
+    }
+    return 0;
+}
